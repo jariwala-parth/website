@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { profile } from '../data/profile';
-import { FiMapPin, FiAward } from 'react-icons/fi';
+import { FiMapPin, FiAward, FiMail } from 'react-icons/fi';
+import Link from 'next/link';
 
 const About = () => {
   const { location, education } = profile;
@@ -32,10 +33,18 @@ const About = () => {
             viewport={{ once: true }}
             className="max-w-md"
           >
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-4">
               <FiMapPin className="text-blue-600 mr-2" />
               <span>{location}</span>
             </div>
+            
+            <div className="flex items-center mb-6">
+              <FiMail className="text-blue-600 mr-2" />
+              <Link href="mailto:theparthjariwala@gmail.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                theparthjariwala@gmail.com
+              </Link>
+            </div>
+            
             <p className="text-gray-600 dark:text-gray-400 mb-8">
               I'm a software engineer with a passion for building scalable and efficient systems.
               With experience at leading tech companies, I've developed expertise in various technologies

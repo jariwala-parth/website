@@ -43,7 +43,6 @@ const Contact = () => {
               <div className="social-icon bg-blue-50 dark:bg-blue-900/20 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30">
                 <FiLinkedin className="text-blue-600 dark:text-blue-400" />
               </div>
-              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">LinkedIn</span>
             </Link>
             <Link
               href={socialLinks.github}
@@ -55,7 +54,6 @@ const Contact = () => {
               <div className="social-icon bg-gray-50 dark:bg-gray-800/40 group-hover:bg-gray-100 dark:group-hover:bg-gray-800/60">
                 <FiGithub className="text-gray-800 dark:text-gray-300" />
               </div>
-              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">GitHub</span>
             </Link>
             <Link
               href={socialLinks.instagram}
@@ -67,7 +65,6 @@ const Contact = () => {
               <div className="social-icon bg-pink-50 dark:bg-pink-900/20 group-hover:bg-pink-100 dark:group-hover:bg-pink-900/30">
                 <FiInstagram className="text-pink-600 dark:text-pink-400" />
               </div>
-              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">Instagram</span>
             </Link>
             <Link
               href="mailto:theparthjariwala@gmail.com"
@@ -77,7 +74,6 @@ const Contact = () => {
               <div className="social-icon bg-red-50 dark:bg-red-900/20 group-hover:bg-red-100 dark:group-hover:bg-red-900/30">
                 <FiMail className="text-red-600 dark:text-red-400" />
               </div>
-              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">Email</span>
             </Link>
           </motion.div>
 

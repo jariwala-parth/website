@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { profile } from '../data/profile';
-import { FiLinkedin, FiGithub, FiInstagram } from 'react-icons/fi';
+import { FiLinkedin, FiGithub, FiInstagram, FiMail } from 'react-icons/fi';
 import Link from 'next/link';
 
 const Hero = () => {
@@ -79,6 +79,15 @@ const Hero = () => {
             >
               <div className="social-icon bg-pink-50 dark:bg-pink-900/20 group-hover:bg-pink-100 dark:group-hover:bg-pink-900/30">
                 <FiInstagram className="text-pink-600 dark:text-pink-400" />
+              </div>
+            </Link>
+            <Link
+              href="mailto:theparthjariwala@gmail.com"
+              className="social-icon-link group"
+              aria-label="Email"
+            >
+              <div className="social-icon bg-red-50 dark:bg-red-900/20 group-hover:bg-red-100 dark:group-hover:bg-red-900/30">
+                <FiMail className="text-red-600 dark:text-red-400" />
               </div>
             </Link>
           </motion.div>
