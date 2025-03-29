@@ -44,7 +44,7 @@ export const profile: Profile = {
   ],
   education: [
     {
-      degree: "BTech - Bachelor of Technology, Information Technology",
+      degree: "Bachelor of Technology, Information Technology",
       university: "Dharmsinh Desai University",
       duration: "2015 - 2019",
     }
