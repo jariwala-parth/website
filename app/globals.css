@@ -16,7 +16,7 @@
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #121520; /* Changed from #0a0a0a to a softer dark blue-gray */
   --foreground: #ededed;
 }
 

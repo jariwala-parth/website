@@ -22,7 +22,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed w-full bg-white/80 dark:bg-black/80 backdrop-blur-md z-50 py-4 px-6 md:px-12">
+    <nav className="fixed w-full bg-white/80 dark:bg-[#121520]/90 backdrop-blur-md z-50 py-4 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" className="text-xl font-bold">
           Parth Jariwala
@@ -57,7 +57,7 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg"
+          className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-[#121520] shadow-lg"
         >
           <div className="flex flex-col py-4 px-8 space-y-4">
             {navItems.map((item) => (
