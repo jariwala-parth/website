@@ -8,15 +8,22 @@ const ThemeToggle = () => {
   
   // Initialize theme on mount
   useEffect(() => {
+    // Get default theme from environment variable
+    let defaultTheme = process.env.DEFAULT_THEME || 'dark';
+    // Ensure it's a valid option
+    if (!['dark', 'light'].includes(defaultTheme)) {
+      defaultTheme = 'dark';
+    }
+    
     // If theme already exists in localStorage, use it
     const savedTheme = localStorage.getItem('theme');
     
-    if (savedTheme) {
+    if (savedTheme && ['dark', 'light'].includes(savedTheme)) {
       setTheme(savedTheme);
     } else {
-      // Default to dark theme if no preference exists
-      setTheme('dark');
-      localStorage.setItem('theme', 'dark');
+      // Default to environment variable setting if no preference exists
+      setTheme(defaultTheme);
+      localStorage.setItem('theme', defaultTheme);
     }
   }, []);
   

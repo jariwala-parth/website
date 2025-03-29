@@ -37,43 +37,47 @@ const Contact = () => {
               href={socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group"
+              className="social-icon-link group"
+              aria-label="LinkedIn"
             >
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-full shadow-md group-hover:shadow-lg transition-shadow">
-                <FiLinkedin className="text-2xl md:text-3xl" />
+              <div className="social-icon bg-blue-50 dark:bg-blue-900/20 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30">
+                <FiLinkedin className="text-blue-600 dark:text-blue-400" />
               </div>
-              <span className="mt-2 text-sm">LinkedIn</span>
+              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">LinkedIn</span>
             </Link>
             <Link
               href={socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors group"
+              className="social-icon-link group"
+              aria-label="GitHub"
             >
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-full shadow-md group-hover:shadow-lg transition-shadow">
-                <FiGithub className="text-2xl md:text-3xl" />
+              <div className="social-icon bg-gray-50 dark:bg-gray-800/40 group-hover:bg-gray-100 dark:group-hover:bg-gray-800/60">
+                <FiGithub className="text-gray-800 dark:text-gray-300" />
               </div>
-              <span className="mt-2 text-sm">GitHub</span>
+              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">GitHub</span>
             </Link>
             <Link
               href={socialLinks.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center text-gray-700 dark:text-gray-300 hover:text-pink-500 dark:hover:text-pink-400 transition-colors group"
+              className="social-icon-link group"
+              aria-label="Instagram"
             >
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-full shadow-md group-hover:shadow-lg transition-shadow">
-                <FiInstagram className="text-2xl md:text-3xl" />
+              <div className="social-icon bg-pink-50 dark:bg-pink-900/20 group-hover:bg-pink-100 dark:group-hover:bg-pink-900/30">
+                <FiInstagram className="text-pink-600 dark:text-pink-400" />
               </div>
-              <span className="mt-2 text-sm">Instagram</span>
+              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">Instagram</span>
             </Link>
             <Link
               href="mailto:theparthjariwala@gmail.com"
-              className="flex flex-col items-center text-gray-700 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 transition-colors group"
+              className="social-icon-link group"
+              aria-label="Email"
             >
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-full shadow-md group-hover:shadow-lg transition-shadow">
-                <FiMail className="text-2xl md:text-3xl" />
+              <div className="social-icon bg-red-50 dark:bg-red-900/20 group-hover:bg-red-100 dark:group-hover:bg-red-900/30">
+                <FiMail className="text-red-600 dark:text-red-400" />
               </div>
-              <span className="mt-2 text-sm">Email</span>
+              <span className="mt-2 text-sm text-gray-700 dark:text-gray-300">Email</span>
             </Link>
           </motion.div>
 

@@ -30,8 +30,19 @@ export default function RootLayout({
           {`
           (function() {
             try {
-              // Check for saved theme preference or default to dark mode
-              const theme = localStorage.getItem('theme') || 'dark';
+              // Get default theme from environment variable and validate
+              let defaultTheme = "${process.env.DEFAULT_THEME || 'dark'}";
+              // Ensure it's a valid option
+              if (!['dark', 'light'].includes(defaultTheme)) {
+                defaultTheme = 'dark';
+              }
+              
+              // Check for saved theme preference or use the default theme
+              let theme = localStorage.getItem('theme') || defaultTheme;
+              // Validate the stored theme as well
+              if (!['dark', 'light'].includes(theme)) {
+                theme = defaultTheme;
+              }
               
               // Apply the theme
               if (theme === 'dark') {
@@ -40,8 +51,17 @@ export default function RootLayout({
                 document.documentElement.classList.remove('dark');
               }
             } catch (e) {
-              // If localStorage is not available, default to dark mode
-              document.documentElement.classList.add('dark');
+              // If localStorage is not available, use the default theme
+              let defaultTheme = "${process.env.DEFAULT_THEME || 'dark'}";
+              // Ensure it's a valid option
+              if (!['dark', 'light'].includes(defaultTheme)) {
+                defaultTheme = 'dark';
+              }
+              if (defaultTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
             }
           })()
           `}

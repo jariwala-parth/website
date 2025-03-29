@@ -20,6 +20,23 @@ const Skills = () => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const skillRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   
+  // Helper function to safely get element position
+  const getElementPosition = (elementName: string) => {
+    const element = skillRefs.current[elementName];
+    if (!element) return { top: 0, left: 0, width: 0 };
+    
+    try {
+      const rect = element.getBoundingClientRect();
+      return {
+        top: rect?.bottom || 0,
+        left: rect?.left || 0,
+        width: element.offsetWidth || 0
+      };
+    } catch (e) {
+      return { top: 0, left: 0, width: 0 };
+    }
+  };
+  
   // Organize skills into meaningful categories
   const organizedSkills = useMemo(() => {
     // Define desired orders for each category
@@ -184,7 +201,10 @@ const Skills = () => {
                     <div 
                       key={skill.name}
                       className="relative" 
-                      ref={el => skillRefs.current[skill.name] = el}
+                      ref={(el) => { 
+                        skillRefs.current[skill.name] = el;
+                        return undefined;
+                      }}
                     >
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -219,9 +239,8 @@ const Skills = () => {
                             ref={popoverRef}
                             className="absolute z-20 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg w-[360px] border-2 border-blue-100 dark:border-blue-900"
                             style={{
-                              top: `${skillRefs.current[skill.name]?.getBoundingClientRect().bottom + 10}px`,
-                              left: `${skillRefs.current[skill.name]?.getBoundingClientRect().left + 
-                                (skillRefs.current[skill.name]?.offsetWidth || 0) / 2 - 180}px`
+                              top: `${getElementPosition(skill.name).top + 10}px`,
+                              left: `${getElementPosition(skill.name).left + getElementPosition(skill.name).width / 2 - 180}px`
                             }}
                             onClick={(e) => e.stopPropagation()}
                           >
