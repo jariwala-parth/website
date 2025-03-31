@@ -16,6 +16,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Parth Jariwala | Software Engineer",
   description: "Personal portfolio website of Parth Jariwala, Software Engineer at Joveo",
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        type: 'image/x-icon',
+        sizes: '32x32'
+      },
+      {
+        url: '/favicon.ico',
+        type: 'image/x-icon', 
+        sizes: '16x16'
+      }
+    ],
+    apple: [
+      {
+        url: '/favicon.ico',
+        type: 'image/x-icon',
+        sizes: '180x180',
+      }
+    ],
+  }
 };
 
 export default function RootLayout({
@@ -26,6 +47,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
         <Script id="theme-script" strategy="beforeInteractive">
           {`
           (function() {
