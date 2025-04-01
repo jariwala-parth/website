@@ -3,15 +3,16 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -37,6 +38,10 @@ export const metadata: Metadata = {
         sizes: '180x180',
       }
     ],
+  },
+  other: {
+    'preconnect': ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+    'preload': '/favicon.ico',
   }
 };
 
@@ -54,30 +59,23 @@ export default function RootLayout({
           {`
           (function() {
             try {
-              // Get default theme from environment variable and validate
               let defaultTheme = "${process.env.DEFAULT_THEME || 'dark'}";
-              // Ensure it's a valid option
               if (!['dark', 'light'].includes(defaultTheme)) {
                 defaultTheme = 'dark';
               }
               
-              // Check for saved theme preference or use the default theme
               let theme = localStorage.getItem('theme') || defaultTheme;
-              // Validate the stored theme as well
               if (!['dark', 'light'].includes(theme)) {
                 theme = defaultTheme;
               }
               
-              // Apply the theme
               if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
               } else {
                 document.documentElement.classList.remove('dark');
               }
             } catch (e) {
-              // If localStorage is not available, use the default theme
               let defaultTheme = "${process.env.DEFAULT_THEME || 'dark'}";
-              // Ensure it's a valid option
               if (!['dark', 'light'].includes(defaultTheme)) {
                 defaultTheme = 'dark';
               }
@@ -90,8 +88,24 @@ export default function RootLayout({
           })()
           `}
         </Script>
+        <Script id="register-sw" strategy="afterInteractive">
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(
+                  function(registration) {
+                    console.log('ServiceWorker registration successful');
+                  },
+                  function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                  }
+                );
+              });
+            }
+          `}
+        </Script>
       </head>
-      <body className="">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>
     </html>
