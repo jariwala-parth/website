@@ -8,8 +8,11 @@ export const GoogleAnalytics = () => {
     if (typeof window.gtag !== 'undefined') {
       // Set default consent
       window.gtag('consent', 'default', {
-        'analytics_storage': 'denied'
-      });
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });  
 
       // Initialize GA
       window.gtag('js', new Date().toISOString());
