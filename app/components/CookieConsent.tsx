@@ -8,20 +8,14 @@ export const CookieConsentBanner = () => {
     try {
       const hasConsent = localStorage.getItem('cookieConsent');
       if (hasConsent === 'true') {
-        initializeGA();
+        window.gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
       }
     } catch (error) {
       console.error('Error checking consent:', error);
     }
   }, []);
-
-  const initializeGA = () => {
-    if (typeof window.gtag !== 'undefined') {
-      window.gtag('consent', 'update', {
-        'analytics_storage': 'granted'
-      });
-    }
-  };
 
   return (
     <CookieConsent
@@ -52,23 +46,23 @@ export const CookieConsentBanner = () => {
         padding: "0.5rem 1rem",
         borderRadius: "0.375rem"
       }}
-      expires={150} // Cookie expiry in days
+      expires={150}
       onAccept={() => {
         try {
           localStorage.setItem('cookieConsent', 'true');
-          initializeGA();
+          window.gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+          });
         } catch (error) {
           console.error('Error accepting cookies:', error);
         }
       }}
       onDecline={() => {
         try {
-          if (typeof window.gtag !== 'undefined') {
-            window.gtag('consent', 'update', {
-              'analytics_storage': 'denied'
-            });
-            localStorage.setItem('cookieConsent', 'false');
-          }
+          window.gtag('consent', 'update', {
+            'analytics_storage': 'denied'
+          });
+          localStorage.setItem('cookieConsent', 'false');
         } catch (error) {
           console.error('Error declining cookies:', error);
         }

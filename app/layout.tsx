@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { CookieConsentBanner } from './components/CookieConsent';
+import { GoogleAnalytics } from './components/Analytics/google-analytics';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -89,28 +90,8 @@ export default function RootLayout({
           `}
         </Script>
         
-        {/* Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-
-                // This is important for EU users - sets initial state
-                gtag('consent', 'default', {
-                  'analytics_storage': 'denied'
-                });
-
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-              `}
-            </Script>
-          </>
+          <GoogleAnalytics />
         )}
         
         {children}
