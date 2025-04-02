@@ -16,20 +16,34 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Parth Jariwala',
-  description: 'Personal website of Parth Jariwala - Software Engineer, Tech Enthusiast, and Problem Solver',
-  keywords: ['Parth Jariwala', 'Software Engineer', 'Web Development', 'React', 'Next.js', 'TypeScript'],
+  metadataBase: new URL('https://theparthjariwala.com'),
+  title: {
+    default: 'Parth Jariwala - Software Engineer',
+    template: '%s | Parth Jariwala'
+  },
+  description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
+  keywords: ['Parth Jariwala', 'Software Engineer', 'Java Developer', 'Spring', 'AWS', 'Microservices', 'Backend Developer', 'Surat', 'India'],
   authors: [{ name: 'Parth Jariwala' }],
   creator: 'Parth Jariwala',
   publisher: 'Parth Jariwala',
-  robots: 'index, follow',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'en_IN',
     url: 'https://theparthjariwala.com',
     siteName: 'Parth Jariwala',
     title: 'Parth Jariwala - Software Engineer',
-    description: 'Personal website of Parth Jariwala - Software Engineer, Tech Enthusiast, and Problem Solver',
+    description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
     images: [
       {
         url: 'https://theparthjariwala.com/og-image.jpg',
@@ -42,7 +56,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Parth Jariwala - Software Engineer',
-    description: 'Personal website of Parth Jariwala - Software Engineer, Tech Enthusiast, and Problem Solver',
+    description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
     images: ['https://theparthjariwala.com/og-image.jpg'],
     creator: '@parthjariwala',
   },
@@ -79,6 +93,26 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        {/* Schema.org JSON-LD */}
+        <Script
+          id="schema-person"
+          type="application/ld+json"
+          strategy="worker"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'http://schema.org',
+              '@type': 'Person',
+              name: 'Parth Jariwala',
+              jobTitle: 'Software Engineer',
+              url: 'https://theparthjariwala.com',
+              sameAs: [
+                'https://www.linkedin.com/in/parth-jariwala/',
+                'https://github.com/jariwala-parth',
+                'https://www.instagram.com/theparthjariwala/'
+              ]
+            })
+          }}
+        />
       </head>
       <body className={inter.className}>
         <Navbar />
