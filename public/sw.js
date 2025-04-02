@@ -5,7 +5,14 @@ const CACHE_NAME = 'parth-website-v1';
 const PRECACHE_ASSETS = [
   '/',
   '/favicon.ico',
-  // Add other static assets you want to cache
+  '/manifest.json',
+  // Critical assets
+  '/images/profile.jpg',
+  '/images/profile.webp',
+  // Font files (if self-hosted)
+  '/fonts/geist/geist-regular.woff2',
+  '/fonts/geist/geist-medium.woff2',
+  // Critical CSS/JS files will be handled by Next.js
 ];
 
 self.addEventListener('install', (event) => {
@@ -18,45 +25,53 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((cacheName) => cacheName !== CACHE_NAME)
-          .map((cacheName) => caches.delete(cacheName))
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName !== CACHE_NAME)
+            .map((cacheName) => caches.delete(cacheName))
+        );
+      })
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  // Improved handling for navigation requests
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match('/'))
+    );
     return;
   }
 
+  // Handle other requests
   event.respondWith(
     caches.match(event.request)
-      .then((response) => {
-        if (response) {
-          return response;
+      .then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
         }
 
-        return fetch(event.request).then((response) => {
-          // Don't cache non-successful responses
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+        return fetch(event.request)
+          .then((response) => {
+            // Don't cache if not a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Cache new successful responses
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+
             return response;
-          }
-
-          // Clone the response since it can only be consumed once
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
+          })
+          .catch(() => caches.match(event.request));
       })
   );
 }); 
