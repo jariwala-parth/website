@@ -6,10 +6,10 @@ const nextConfig = {
   },
   // Enable image optimization
   images: {
+    domains: ['cdn.theparthjariwal.com'],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    minimumCacheTTL: 60,
-    unoptimized: true, // Let Cloudflare handle image optimization
+    minimumCacheTTL: 31536000,
   },
   // Enable compression
   compress: true,
@@ -24,15 +24,11 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png|webp|avif|gif)',
+        source: '/:all*(svg|jpg|png)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable, stale-while-revalidate=31536000, s-maxage=31536000'
-          },
-          {
-            key: 'CDN-Cache-Control',
-            value: 'public, max-age=31536000, immutable'
+            value: 'public, max-age=31536000, stale-while-revalidate=31536000'
           }
         ]
       },
@@ -41,11 +37,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable, stale-while-revalidate=31536000, s-maxage=31536000'
-          },
-          {
-            key: 'CDN-Cache-Control',
-            value: 'public, max-age=31536000, immutable'
+            value: 'public, max-age=31536000, stale-while-revalidate=31536000'
           }
         ]
       },
