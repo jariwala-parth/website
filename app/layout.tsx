@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { metadata } from './metadata';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,35 +15,7 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: "Parth Jariwala | Software Engineer",
-  description: "Personal portfolio website of Parth Jariwala, Software Engineer at Joveo",
-  icons: {
-    icon: [
-      {
-        url: '/favicon.ico',
-        type: 'image/x-icon',
-        sizes: '32x32'
-      },
-      {
-        url: '/favicon.ico',
-        type: 'image/x-icon', 
-        sizes: '16x16'
-      }
-    ],
-    apple: [
-      {
-        url: '/favicon.ico',
-        type: 'image/x-icon',
-        sizes: '180x180',
-      }
-    ],
-  },
-  other: {
-    'preconnect': ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
-    'preload': '/favicon.ico',
-  }
-};
+export { metadata };
 
 export default function RootLayout({
   children,
@@ -92,16 +64,7 @@ export default function RootLayout({
           {`
             if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
               window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js', {
-                  scope: '/'
-                }).then(
-                  function(registration) {
-                    console.log('ServiceWorker registration successful with scope:', registration.scope);
-                  },
-                  function(err) {
-                    console.error('ServiceWorker registration failed:', err);
-                  }
-                );
+                navigator.serviceWorker.register('/sw.js');
               });
             }
           `}
