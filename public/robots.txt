@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://theparthjariwala.com
+
+# Sitemaps
+Sitemap: https://theparthjariwala.com/sitemap.xml

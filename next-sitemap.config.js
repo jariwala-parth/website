@@ -2,7 +2,6 @@
 module.exports = {
   siteUrl: 'https://theparthjariwala.com',
   generateRobotsTxt: true,
-  exclude: ['/404'], // Add any pages you want to exclude
   robotsTxtOptions: {
     policies: [
       {
@@ -11,6 +10,9 @@ module.exports = {
       },
     ],
   },
-  changefreq: 'monthly',
-  priority: 0.7,
+  changefreq: 'weekly',
+  priority: 1.0,
+  sitemapSize: 7000,
+  exclude: ['/server-sitemap.xml'],
+  generateIndexSitemap: false,
 } 

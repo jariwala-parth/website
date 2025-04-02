@@ -1,28 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
-  
-  // Skip for non-static files
+// List of known routes that should not be redirected
+const validRoutes = ['', 'about', 'skills', 'projects', 'contact', 'experience'];
+
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Skip static files and API routes
   if (
-    !path.startsWith('/_next/') && 
-    !path.startsWith('/static') &&
-    !path.match(/\.(jpg|jpeg|png|webp|avif|css|js)$/)
+    pathname.startsWith('/_next') || 
+    pathname.startsWith('/api') ||
+    pathname.includes('.') // Skip files with extensions (e.g., .jpg, .ico)
   ) {
     return NextResponse.next();
   }
 
-  const response = NextResponse.next();
+  // Get the path without leading slash
+  const path = pathname.slice(1);
 
-  // Add cache control headers for static assets
-  response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  // If path is not in validRoutes, redirect to home
+  if (path && !validRoutes.includes(path)) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 
-  return response;
+  return NextResponse.next();
 }
 
-// Run the middleware on all paths except static files and Next.js internals
+// Configure the middleware to match all routes
 export const config = {
-  matcher: [
-    '/((?!api/health|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: '/:path*',
 }; 
