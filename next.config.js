@@ -24,11 +24,35 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:all*(svg|jpg|png)',
+        source: '/sw.js',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, stale-while-revalidate=31536000'
+            value: 'public, max-age=0, must-revalidate'
+          },
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/'
+          }
+        ]
+      },
+      {
+        // Add caching for JS and CSS files
+        source: '/:all*(js|css)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      },
+      {
+        // Updated image formats and caching
+        source: '/:all*(jpg|jpeg|png|gif|ico|svg|webp|avif)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
           }
         ]
       },
@@ -37,7 +61,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, stale-while-revalidate=31536000'
+            value: 'public, max-age=31536000, immutable'
           }
         ]
       },
@@ -46,7 +70,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable, stale-while-revalidate=31536000, s-maxage=31536000'
+            value: 'public, max-age=31536000, immutable'
           },
           {
             key: 'CDN-Cache-Control',
@@ -59,7 +83,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable, stale-while-revalidate=31536000, s-maxage=31536000'
+            value: 'public, max-age=31536000, immutable'
           },
           {
             key: 'CDN-Cache-Control',
