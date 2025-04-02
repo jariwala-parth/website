@@ -60,15 +60,6 @@ export default function RootLayout({
           })()
           `}
         </Script>
-        <Script id="register-sw" strategy="afterInteractive">
-          {`
-            if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js');
-              });
-            }
-          `}
-        </Script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
