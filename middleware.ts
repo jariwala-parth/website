@@ -47,7 +47,15 @@ export function middleware(req: NextRequest) {
     });
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  // Add cache control headers for static assets
+  if (path.startsWith('/_next/') || 
+      path.match(/\.(jpg|jpeg|png|webp|avif|css|js)$/)) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+
+  return response;
 }
 
 // Run the middleware on all paths except static files and Next.js internals
