@@ -6,7 +6,7 @@ const nextConfig = {
   },
   // Enable image optimization
   images: {
-    domains: ['cdn.theparthjariwal.com'],
+    domains: ['cdn.theparthjariwala.com'],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     minimumCacheTTL: 31536000,
@@ -99,12 +99,12 @@ const nextConfig = {
             value: 'max-age=31536000; includeSubDomains; preload'
           },
           {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
           }
         ]
       }
