@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
+import ScrollHandler from './components/ScrollHandler';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -61,7 +62,10 @@ export const metadata: Metadata = {
     creator: '@parthjariwala',
   },
   verification: {
-    google: 'your-google-site-verification',
+    google: 'INSERT_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
+    other: {
+      'google-site-verification': 'INSERT_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
+    }
   },
   alternates: {
     canonical: 'https://theparthjariwala.com',
@@ -74,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         {/* Google Analytics */}
         {GA_MEASUREMENT_ID && (
@@ -114,7 +118,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+        <ScrollHandler />
         <Navbar />
         <main className="min-h-screen pt-16">
           {children}

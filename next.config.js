@@ -23,15 +23,33 @@ const nextConfig = {
   // Enable supported experimental features
   experimental: {
     optimizeCss: true,
-    scrollRestoration: true
+    scrollRestoration: false
   },
   // Add security headers and CDN caching directives
   async headers() {
     return [
       {
-        // Add caching for JS and CSS files
-        source: '/:all*(js|css)',
+        // Updated content type and caching for JS files
+        source: '/_next/static/:path*.js',
         headers: [
+          {
+            key: 'Content-Type', 
+            value: 'application/javascript; charset=utf-8'
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      },
+      {
+        // Proper content type for CSS files
+        source: '/_next/static/:path*.css',
+        headers: [
+          {
+            key: 'Content-Type', 
+            value: 'text/css; charset=utf-8'
+          },
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
@@ -117,8 +135,8 @@ const nextConfig = {
       // Split chunks optimization
       config.optimization.splitChunks = {
         chunks: 'all',
-        minSize: 20000,
-        maxSize: 244000,
+        minSize: 10000,
+        maxSize: 150000,
         minChunks: 1,
         maxAsyncRequests: 30,
         maxInitialRequests: 30,
