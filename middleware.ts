@@ -23,7 +23,21 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  // Set correct content-type headers for CSS files
+  if (pathname.endsWith('.css')) {
+    response.headers.set('Content-Type', 'text/css; charset=utf-8');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+  }
+
+  // Set correct content-type headers for JS files
+  if (pathname.endsWith('.js')) {
+    response.headers.set('Content-Type', 'application/javascript; charset=utf-8');
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+  }
+
+  return response;
 }
 
 // Configure the middleware to match all routes

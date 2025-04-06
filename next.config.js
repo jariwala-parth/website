@@ -29,12 +29,16 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Updated content type and caching for JS files
-        source: '/_next/static/:path*.js',
+        // Proper content type for CSS files
+        source: '/_next/static/css/:path*',
         headers: [
           {
-            key: 'Content-Type', 
-            value: 'application/javascript; charset=utf-8'
+            key: 'Content-Type',
+            value: 'text/css; charset=utf-8'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           },
           {
             key: 'Cache-Control',
@@ -43,12 +47,16 @@ const nextConfig = {
         ]
       },
       {
-        // Proper content type for CSS files
-        source: '/_next/static/:path*.css',
+        // Proper content type for JS files
+        source: '/_next/static/:path*.js',
         headers: [
           {
-            key: 'Content-Type', 
-            value: 'text/css; charset=utf-8'
+            key: 'Content-Type',
+            value: 'application/javascript; charset=utf-8'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
           },
           {
             key: 'Cache-Control',

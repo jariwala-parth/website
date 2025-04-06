@@ -80,6 +80,23 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
+        {/* Content Security Policy */}
+        <meta 
+          httpEquiv="Content-Security-Policy" 
+          content="style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;" 
+        />
+        
+        {/* X-Content-Type-Options to prevent MIME sniffing */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        
+        {/* Preload CSS with correct MIME type */}
+        <link 
+          rel="preload" 
+          href="/_next/static/css/app-layout.css" 
+          as="style" 
+          type="text/css" 
+        />
+        
         {/* Google Analytics */}
         {GA_MEASUREMENT_ID && (
           <>
