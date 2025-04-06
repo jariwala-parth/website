@@ -33,13 +33,19 @@ export function middleware(request: NextRequest) {
   }
 
   // Set correct content-type headers for CSS files
-  if (pathname.endsWith('.css') || pathname.includes('/css/')) {
+  if (pathname.endsWith('.css') || pathname.includes('/css/') || pathname.includes('/_next/static/css/')) {
     response.headers.set('Content-Type', 'text/css; charset=utf-8');
     response.headers.set('X-Content-Type-Options', 'nosniff');
     
-    // Explicitly prevent CSS from being treated as JavaScript
-    response.headers.set('Content-Script-Type', 'text/javascript');
-    response.headers.set('X-Content-Security-Policy', "style-src 'self' 'unsafe-inline'");
+    // Return special headers to prevent content type confusion
+    response.headers.set('X-Content-Script-Type', 'text/css');
+    response.headers.set('Content-Script-Type', 'text/css');
+    response.headers.set('Content-Style-Type', 'text/css');
+    response.headers.delete('Content-Security-Policy');
+    
+    // Set stricter headers for CSS files
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('X-XSS-Protection', '1; mode=block');
   }
 
   // Set correct content-type headers for JS files

@@ -96,12 +96,6 @@ export default function RootLayout({
           }}
         />
         
-        {/* Content Security Policy */}
-        <meta 
-          httpEquiv="Content-Security-Policy" 
-          content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self'"
-        />
-        
         {/* X-Content-Type-Options to prevent MIME sniffing */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         
