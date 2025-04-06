@@ -4,20 +4,15 @@ import { useEffect } from 'react';
 
 export default function ScrollHandler() {
   useEffect(() => {
-    // Reset scroll position on page load if no hash
-    if (!window.location.hash) {
-      window.scrollTo(0, 0);
-    }
-
-    // Add smooth scrolling only after initial load
-    const html = document.documentElement;
+    // Force scroll to top on every page load/refresh
+    window.scrollTo(0, 0);
     
-    // Preserve dark mode class, only add smooth-scroll
-    if (!html.classList.contains('smooth-scroll')) {
-      html.classList.add('smooth-scroll');
+    // Disable browser's scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
-
-    // Handle link clicks to ensure smooth scrolling for hash links
+    
+    // Handle link clicks for smooth scrolling to hash links
     const handleLinkClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
@@ -25,13 +20,11 @@ export default function ScrollHandler() {
       if (link && link.hash && link.pathname === window.location.pathname) {
         e.preventDefault();
         
-        // Get the target element
+        // Get the target element and scroll to it
         const targetElement = document.querySelector(link.hash);
         if (targetElement) {
-          // Scroll to the element with smooth behavior
           targetElement.scrollIntoView({ behavior: 'smooth' });
-          
-          // Update the URL without triggering scroll
+          // Update URL without causing scroll
           history.pushState(null, '', link.hash);
         }
       }
@@ -41,8 +34,12 @@ export default function ScrollHandler() {
 
     return () => {
       document.removeEventListener('click', handleLinkClick);
-      html.classList.remove('smooth-scroll');
     };
+  }, []);
+
+  // Run this effect on every route change to force scroll to top
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   return null;

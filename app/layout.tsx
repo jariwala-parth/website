@@ -78,24 +78,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" style={{ scrollBehavior: 'auto' }}>
       <head>
+        {/* Force scroll top on refresh script - important: must be first */}
+        <Script 
+          id="force-scroll-top" 
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('load', function() {
+                window.scrollTo(0, 0);
+              });
+              if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+              }
+            `
+          }}
+        />
+        
         {/* Content Security Policy */}
         <meta 
           httpEquiv="Content-Security-Policy" 
-          content="style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;" 
+          content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; img-src 'self' data: https:; font-src 'self'; connect-src 'self'"
         />
         
         {/* X-Content-Type-Options to prevent MIME sniffing */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        
-        {/* Preload CSS with correct MIME type */}
-        <link 
-          rel="preload" 
-          href="/_next/static/css/app-layout.css" 
-          as="style" 
-          type="text/css" 
-        />
         
         {/* Google Analytics */}
         {GA_MEASUREMENT_ID && (
