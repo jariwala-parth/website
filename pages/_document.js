@@ -5,6 +5,16 @@ export default function Document() {
   // Generate a nonce value for this request
   const nonce = crypto.randomBytes(16).toString('base64');
   
+  // Detect if the request is from Googlebot - this is client-side, but helps with testing
+  const isGooglebot = typeof window !== 'undefined' 
+    ? navigator.userAgent.toLowerCase().includes('googlebot')
+    : false;
+  
+  // More permissive CSP for Googlebot
+  const cspValue = isGooglebot
+    ? `default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com 'nonce-${nonce}'; img-src 'self' data: https: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://stats.g.doubleclick.net`
+    : `default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com 'nonce-${nonce}'; img-src 'self' data: https: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://stats.g.doubleclick.net`;
+  
   return (
     <Html lang="en">
       <Head>
@@ -19,14 +29,7 @@ export default function Document() {
         {/* Content Security Policy with nonce */}
         <meta
           httpEquiv="Content-Security-Policy"
-          content={`
-            default-src 'self'; 
-            style-src 'self' 'unsafe-inline'; 
-            script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com 'nonce-${nonce}'; 
-            img-src 'self' data: https: https://www.google-analytics.com; 
-            font-src 'self'; 
-            connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://stats.g.doubleclick.net
-          `.replace(/\s+/g, ' ').trim()}
+          content={cspValue.replace(/\s+/g, ' ').trim()}
         />
       </Head>
       <body>

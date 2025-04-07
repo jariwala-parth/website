@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 const validRoutes = ['', 'about', 'skills', 'projects', 'contact', 'experience'];
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
+  const userAgent = request.headers.get('user-agent') || '';
+  const isGooglebot = userAgent.toLowerCase().includes('googlebot');
 
   // Skip static files and API routes
   if (
@@ -12,6 +14,15 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.includes('.') // Skip files with extensions (e.g., .jpg, .ico)
   ) {
+    // Special handling for CSS files accessed by Googlebot
+    if (isGooglebot && pathname.endsWith('.css')) {
+      // Redirect CSS requests from Googlebot to our proxy
+      const url = new URL(request.url);
+      url.pathname = '/api/proxy/css';
+      url.searchParams.set('url', pathname);
+      return NextResponse.redirect(url);
+    }
+    
     return NextResponse.next();
   }
 

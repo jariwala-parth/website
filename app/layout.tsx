@@ -62,9 +62,9 @@ export const metadata: Metadata = {
     creator: '@parthjariwala',
   },
   verification: {
-    google: 'INSERT_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
+    google: 'google5debb082fcd5f3a6',
     other: {
-      'google-site-verification': 'INSERT_YOUR_GOOGLE_SITE_VERIFICATION_CODE_HERE',
+      'google-site-verification': 'google5debb082fcd5f3a6',
     }
   },
   alternates: {
@@ -80,6 +80,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" style={{ scrollBehavior: 'auto' }}>
       <head>
+        {/* Google Search verification */}
+        <meta name="google-site-verification" content="google5debb082fcd5f3a6" />
+        
+        {/* Explicitly tell browsers how to handle CSS */}
+        <meta httpEquiv="Content-Style-Type" content="text/css" />
+        
         {/* Force scroll top on refresh script - important: must be first */}
         <Script 
           id="force-scroll-top" 
