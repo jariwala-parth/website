@@ -69,6 +69,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://theparthjariwala.com',
+    languages: {
+      'en-US': 'https://theparthjariwala.com',
+    },
   },
 };
 
@@ -83,8 +86,23 @@ export default function RootLayout({
         {/* Google Search verification */}
         <meta name="google-site-verification" content="google5debb082fcd5f3a6" />
         
+        {/* Google AdSense */}
+        <meta name="google-adsense-account" content="ca-pub-8748331446225704"/>
+        
+        {/* Content Security Policy for Google AdSense and Analytics */}
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.google-analytics.com https://ep2.adtrafficquality.google https://*.google.com https://static.cloudflareinsights.com; img-src 'self' data: https: https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.google.com https://*.googleusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://*.google.com https://static.cloudflareinsights.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://ep2.adtrafficquality.google https://www.google.com https://*.google.com"
+        />
+        
         {/* Explicitly tell browsers how to handle CSS */}
         <meta httpEquiv="Content-Style-Type" content="text/css" />
+        
+        {/* SEO - Explicitly set indexing */}
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="bingbot" content="index, follow" />
+        <link rel="canonical" href="https://theparthjariwala.com" />
         
         {/* Force scroll top on refresh script - important: must be first */}
         <Script 
@@ -140,6 +158,48 @@ export default function RootLayout({
                 'https://www.instagram.com/theparthjariwala/'
               ]
             })
+          }}
+        />
+        
+        {/* Google AdSense */}
+        <Script
+          id="google-adsense"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8748331446225704"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+        
+        {/* AdBlock Detection */}
+        <Script
+          id="adblock-detection"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              function checkAdBlocker() {
+                const adElement = document.createElement('div');
+                adElement.innerHTML = '&nbsp;';
+                adElement.className = 'adsbox';
+                adElement.style.position = 'absolute';
+                adElement.style.opacity = '0';
+                document.body.appendChild(adElement);
+                
+                window.setTimeout(function() {
+                  if (adElement.offsetHeight === 0) {
+                    document.body.classList.add('adblock-detected');
+                  }
+                  adElement.remove();
+                }, 100);
+              }
+              
+              if (document.readyState === 'complete') {
+                checkAdBlocker();
+              } else {
+                window.addEventListener('load', checkAdBlocker);
+              }
+            })();
+          `
           }}
         />
       </head>

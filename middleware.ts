@@ -1,74 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// List of known routes that should not be redirected
-const validRoutes = ['', 'about', 'skills', 'projects', 'contact', 'experience'];
+// All valid routes including potential subpaths
+const validRoutes = [
+  '', // root
+  'about', 
+  'skills',
+  'projects',      // Allows /projects/any-subpath
+  'contact',
+  'experience',
+  'ads.txt',       // Allow AdSense verification
+  'google-site-verification' // Explicitly allow verification files
+];
+
+// Comprehensive bot detection regex
+const BOT_REGEX = /(googlebot|adsbot-google|mediapartners-google|bingbot|yandex|baiduspider|facebot|twitterbot|duckduckbot)/i;
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const userAgent = request.headers.get('user-agent') || '';
-  const isGooglebot = userAgent.toLowerCase().includes('googlebot');
+  const isBot = BOT_REGEX.test(userAgent.toLowerCase());
 
-  // Skip static files and API routes
+  // 1. Bypass middleware for verified crawlers and static files
   if (
+    isBot ||
     pathname.startsWith('/_next') || 
     pathname.startsWith('/api') ||
-    pathname.includes('.') // Skip files with extensions (e.g., .jpg, .ico)
+    pathname.includes('.') ||          // All files with extensions
+    pathname.startsWith('/google-site-verification') // Verification files
   ) {
-    // Special handling for CSS files accessed by Googlebot
-    if (isGooglebot && pathname.endsWith('.css')) {
-      // Redirect CSS requests from Googlebot to our proxy
-      const url = new URL(request.url);
-      url.pathname = '/api/proxy/css';
-      url.searchParams.set('url', pathname);
-      return NextResponse.redirect(url);
-    }
-    
     return NextResponse.next();
   }
 
-  // Get the path without leading slash
-  const path = pathname.slice(1);
+  // 2. Validate routes (including subpaths)
+  const isValidRoute = validRoutes.some(route => 
+    pathname === `/${route}` || 
+    pathname.startsWith(`/${route}/`)
+  );
 
-  // If path is not in validRoutes, redirect to home
-  if (path && !validRoutes.includes(path)) {
+  if (!isValidRoute) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
+  // 3. Set cache headers only for non-bot traffic
   const response = NextResponse.next();
-
-  // For HTML pages (main routes), prevent caching to avoid scroll issues
-  if (!pathname.includes('.')) {
-    response.headers.set('Cache-Control', 'no-store, must-revalidate');
+  if (!isBot && !pathname.includes('.')) {
+    response.headers.set('Cache-Control', 'no-store, max-age=0');
     response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-  }
-
-  // Set correct content-type headers for CSS files
-  if (pathname.endsWith('.css') || pathname.includes('/css/') || pathname.includes('/_next/static/css/')) {
-    response.headers.set('Content-Type', 'text/css; charset=utf-8');
-    response.headers.set('X-Content-Type-Options', 'nosniff');
-    
-    // Return special headers to prevent content type confusion
-    response.headers.set('X-Content-Script-Type', 'text/css');
-    response.headers.set('Content-Script-Type', 'text/css');
-    response.headers.set('Content-Style-Type', 'text/css');
-    response.headers.delete('Content-Security-Policy');
-    
-    // Set stricter headers for CSS files
-    response.headers.set('X-Frame-Options', 'DENY');
-    response.headers.set('X-XSS-Protection', '1; mode=block');
-  }
-
-  // Set correct content-type headers for JS files
-  if (pathname.endsWith('.js')) {
-    response.headers.set('Content-Type', 'application/javascript; charset=utf-8');
-    response.headers.set('X-Content-Type-Options', 'nosniff');
   }
 
   return response;
 }
 
-// Configure the middleware to match all routes
 export const config = {
   matcher: '/:path*',
 }; 

@@ -8,7 +8,20 @@ module.exports = {
         userAgent: '*',
         allow: '/',
       },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Mediapartners-Google',
+        allow: '/',
+      },
+      {
+        userAgent: 'AdsBot-Google',
+        allow: '/',
+      }
     ],
+    additionalSitemaps: [],
   },
   changefreq: 'weekly',
   priority: 1.0,

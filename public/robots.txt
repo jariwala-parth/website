@@ -2,6 +2,18 @@
 User-agent: *
 Allow: /
 
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Mediapartners-Google
+User-agent: Mediapartners-Google
+Allow: /
+
+# AdsBot-Google
+User-agent: AdsBot-Google
+Allow: /
+
 # Host
 Host: https://theparthjariwala.com
 
