@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/Navbar';
 import ScrollHandler from './components/ScrollHandler';
 import Script from 'next/script';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
 // Get GA4 ID from environment variable
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -19,10 +20,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://theparthjariwala.com'),
   title: {
-    default: 'Parth Jariwala - Software Engineer',
+    default: 'Parth Jariwala · Senior Backend Engineer',
     template: '%s | Parth Jariwala'
   },
-  description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
+  description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
   keywords: ['Parth Jariwala', 'Software Engineer', 'Java Developer', 'Spring', 'AWS', 'Microservices', 'Backend Developer', 'Surat', 'India'],
   authors: [{ name: 'Parth Jariwala' }],
   creator: 'Parth Jariwala',
@@ -43,8 +44,8 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://theparthjariwala.com',
     siteName: 'Parth Jariwala',
-    title: 'Parth Jariwala - Software Engineer',
-    description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
+    title: 'Parth Jariwala · Senior Backend Engineer',
+    description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
     images: [
       {
         url: 'https://theparthjariwala.com/og-image.jpg',
@@ -56,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Parth Jariwala - Software Engineer',
-    description: 'Software Engineer specializing in Java, Spring, AWS and microservices. Building robust backend systems and APIs.',
+    title: 'Parth Jariwala · Senior Backend Engineer',
+    description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
     images: ['https://theparthjariwala.com/og-image.jpg'],
     creator: '@parthjariwala',
   },
@@ -81,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" style={{ scrollBehavior: 'auto' }}>
+    <html lang="en" className={`dark ${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         {/* Google Search verification */}
         <meta name="google-site-verification" content="google5debb082fcd5f3a6" />
@@ -104,6 +105,15 @@ export default function RootLayout({
         <meta name="bingbot" content="index, follow" />
         <link rel="canonical" href="https://theparthjariwala.com" />
         
+        {/* Apply saved theme before paint to avoid a light/dark flash */}
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}}catch(e){}`
+          }}
+        />
+
         {/* Force scroll top on refresh script - important: must be first */}
         <Script 
           id="force-scroll-top" 
@@ -150,7 +160,8 @@ export default function RootLayout({
               '@context': 'http://schema.org',
               '@type': 'Person',
               name: 'Parth Jariwala',
-              jobTitle: 'Software Engineer',
+              jobTitle: 'Senior Backend Engineer',
+              worksFor: { '@type': 'Organization', name: 'Joveo' },
               url: 'https://theparthjariwala.com',
               sameAs: [
                 'https://www.linkedin.com/in/parth-jariwala/',
@@ -203,10 +214,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+      <body className="bg-bg text-fg font-sans">
         <ScrollHandler />
         <Navbar />
-        <main className="min-h-screen pt-16">
+        <main className="min-h-screen">
           {children}
         </main>
       </body>

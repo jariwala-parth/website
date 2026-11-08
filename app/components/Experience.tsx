@@ -1,88 +1,114 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import Link from 'next/link';
+import { FiArrowUpRight, FiMapPin } from 'react-icons/fi';
 import { profile } from '../data/profile';
-import { FiBriefcase, FiMapPin, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import type { Company } from '../types/profile';
+import Section, { Reveal } from './Section';
 
-const Experience = () => {
-  const { experience } = profile;
-  const [showAll, setShowAll] = useState(false);
-  
-  // Show only the two most recent experiences initially
-  const visibleExperiences = showAll ? experience : experience.slice(0, 2);
-
+function CompanyCard({ job }: { job: Company }) {
   return (
-    <section id="experience" className="py-20">
-      <div className="container px-6 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-3xl font-bold mb-2">Work Experience</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mb-6"></div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            My professional journey in the tech industry.
-          </p>
-        </motion.div>
-
-        <div className="max-w-3xl mx-auto">
-          {visibleExperiences.map((job, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative pl-8 pb-12 border-l-2 border-blue-600 last:border-transparent"
+    <article className="overflow-hidden rounded-2xl border border-line bg-surface">
+      <header className="border-b border-line bg-raised/60 p-5 sm:p-7">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+          {job.logo && job.logoFit === 'cover' ? (
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-line shadow-sm">
+              <img src={job.logo} alt={`${job.company} logo`} width={64} height={64} className="h-full w-full object-cover" />
+            </div>
+          ) : job.logo ? (
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-line bg-white p-3 shadow-sm">
+              <img src={job.logo} alt={`${job.company} logo`} width={40} height={40} className="h-full w-full object-contain" />
+            </div>
+          ) : (
+            <div
+              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-line bg-surface font-mono text-lg font-semibold text-accent"
+              aria-hidden="true"
             >
-              <div className="absolute -left-[11px] top-0 bg-blue-600 rounded-full p-2">
-                <FiBriefcase className="text-white" />
-              </div>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-                <div className="flex flex-wrap justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold">{job.title}</h3>
-                  <span className="text-sm text-blue-600 bg-blue-100 dark:bg-blue-900 dark:text-blue-300 px-3 py-1 rounded-full">
-                    {job.duration}
-                  </span>
-                </div>
-                <h4 className="text-lg text-gray-700 dark:text-gray-300 mb-2">{job.company}</h4>
-                {job.location && (
-                  <div className="flex items-center mb-3 text-sm text-gray-500 dark:text-gray-400">
-                    <FiMapPin className="mr-1" />
-                    <span>{job.location}</span>
-                  </div>
-                )}
-                <p className="text-gray-600 dark:text-gray-400">{job.description}</p>
-              </div>
-            </motion.div>
-          ))}
-          
-          {experience.length > 2 && (
-            <div className="flex justify-center mt-2">
-              <button
-                onClick={() => setShowAll(!showAll)}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition-colors"
-              >
-                {showAll ? (
-                  <>
-                    Show Less <FiChevronUp />
-                  </>
-                ) : (
-                  <>
-                    Show More <FiChevronDown />
-                  </>
-                )}
-              </button>
+              {job.monogram}
             </div>
           )}
-        </div>
-      </div>
-    </section>
-  );
-};
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h3 className="text-2xl font-semibold tracking-tight">
+                {job.url ? (
+                  <Link href={job.url} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-1 hover:text-accent">
+                    {job.company}
+                    <FiArrowUpRight className="h-4 w-4 text-subtle group-hover:text-accent" />
+                  </Link>
+                ) : (
+                  job.company
+                )}
+              </h3>
+              <span className="font-mono text-xs text-subtle">{job.duration}</span>
+            </div>
+            <p className="mt-1.5 flex items-center gap-1.5 text-sm text-subtle">
+              <FiMapPin className="h-3.5 w-3.5" /> {job.location}
+            </p>
+            <p className="mt-3 text-fg/90">{job.tagline}</p>
 
-export default Experience; 
+            <ol className="mt-4 flex flex-wrap gap-2">
+              {job.roles.map((r, i) => (
+                <li
+                  key={r.title}
+                  className={`rounded-md border px-2.5 py-1 font-mono text-[11px] ${
+                    i === 0 ? 'border-accent/40 bg-accent/10 text-accent' : 'border-line text-subtle'
+                  }`}
+                >
+                  {r.title} <span className="opacity-70">· {r.duration}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </header>
+
+      <div className="grid gap-px bg-line">
+        {job.areas.map((area) => (
+          <div key={area.name} className="bg-surface p-5 sm:p-7">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h4 className="text-lg font-semibold">{area.name}</h4>
+              <span className="font-mono text-xs text-subtle">{area.period}</span>
+            </div>
+            <ul className="mt-4 space-y-3">
+              {area.points.map((p) => (
+                <li key={p.slice(0, 32)} className="relative pl-5 leading-relaxed text-muted">
+                  <span className="absolute left-0 top-[0.6em] h-1.5 w-1.5 rounded-full bg-accent/70" aria-hidden="true" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+            {area.stack && (
+              <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+                {area.stack.map((t) => (
+                  <li key={t} className="rounded bg-raised px-2 py-0.5 font-mono text-[11px] text-subtle">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+export default function Experience() {
+  return (
+    <Section
+      id="experience"
+      index="02"
+      label="experience"
+      title="Where I've worked"
+      intro="Seven years on backend teams, from network monitoring APIs to the systems that ingest, price and route millions of job ads."
+    >
+      <div className="space-y-8">
+        {profile.experience.map((job, i) => (
+          <Reveal key={job.company} delay={i * 0.05}>
+            <CompanyCard job={job} />
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  );
+}

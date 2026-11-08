@@ -1,76 +1,64 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { FiArrowUpRight } from 'react-icons/fi';
 import { profile } from '../data/profile';
-import { FiCalendar, FiBriefcase } from 'react-icons/fi';
+import Section, { Reveal } from './Section';
 
-const Projects = () => {
-  const { projects } = profile;
-
+export default function Projects() {
   return (
-    <section id="projects" className="py-20">
-      <div className="container px-6 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-3xl font-bold mb-2">Projects</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mb-6"></div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Some of the interesting projects I've worked on.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-                
-                {project.duration && (
-                  <div className="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <FiCalendar className="mr-2" />
-                    <span>{project.duration}</span>
-                  </div>
-                )}
-                
-                {project.association && (
-                  <div className="flex items-center mb-3 text-sm text-gray-500 dark:text-gray-400">
-                    <FiBriefcase className="mr-2" />
-                    <span>{project.association}</span>
-                  </div>
-                )}
-                
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+    <Section
+      id="projects"
+      index="03"
+      label="side projects"
+      title="Things I build on weekends"
+      intro="Products I've designed, built and run end to end, from the data model to deployment."
+    >
+      <div className="grid gap-6 lg:grid-cols-2">
+        {profile.projects.map((p, i) => (
+          <Reveal key={p.name} delay={i * 0.06} className="h-full">
+            <article className="flex h-full flex-col rounded-2xl border border-line bg-surface p-6 sm:p-7">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold tracking-tight">{p.name}</h3>
+                  <Link
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex items-center gap-1 font-mono text-xs text-accent hover:underline"
+                  >
+                    {p.domain}
+                    <FiArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-subtle">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                  live
+                </span>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
-export default Projects; 
+              <p className="mt-4 text-fg/90 leading-relaxed">{p.tagline}</p>
+
+              <ul className="mt-5 space-y-3">
+                {p.points.map((pt) => (
+                  <li key={pt.slice(0, 32)} className="relative pl-5 text-sm leading-relaxed text-muted">
+                    <span className="absolute left-0 top-[0.55em] h-1.5 w-1.5 rounded-full bg-accent/70" aria-hidden="true" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+
+              <ul className="mt-auto flex flex-wrap gap-1.5 pt-6" aria-label="Technologies">
+                {p.stack.map((t) => (
+                  <li key={t} className="rounded bg-raised px-2 py-0.5 font-mono text-[11px] text-subtle">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  );
+}
