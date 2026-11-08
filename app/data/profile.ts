@@ -15,13 +15,14 @@ export const profile: Profile = {
   stats: [
     { value: '7+', label: 'years in backend' },
     { value: '4+', label: 'years at Joveo' },
-    { value: '7', label: 'ATS integrations in prod' },
+    { value: '6→25%', label: 'spend run by AutoTrader' },
     { value: '80%', label: 'faster feed-to-live' },
   ],
   experience: [
     {
       company: 'Joveo',
       monogram: 'J',
+      logo: '/images/joveo-mark.svg',
       url: 'https://www.joveo.com',
       location: 'Remote',
       duration: 'Apr 2022 – Present',
@@ -89,40 +90,34 @@ export const profile: Profile = {
       ],
     },
   ],
-  metrics: [
+  projects: [
     {
-      value: '120→20 min',
-      label: 'Feed to live',
-      context: 'Event-driven orchestration replaced polling, so feed changes start processing as soon as they happen.',
+      name: 'Batchelo',
+      url: 'https://parthjariwala.in',
+      domain: 'parthjariwala.in',
+      tagline: 'Multi-tenant SaaS for running coaching academies: batches, class schedules, attendance, fees and staff.',
+      points: [
+        'Spring Boot 3 on Java 21, running serverless on AWS Lambda behind API Gateway and deployed with SAM.',
+        'DynamoDB data model with organisation-scoped indexes, optimistic locking and recurring-session edits done with bounded parallel writes.',
+        'Cognito auth with Google sign-in and email invitations; the Next.js frontend runs on Cloudflare Workers.',
+      ],
+      stack: ['Java 21', 'Spring Boot', 'AWS Lambda', 'DynamoDB', 'Cognito', 'Next.js', 'Cloudflare'],
     },
     {
-      value: '−70%',
-      label: 'Partner API calls',
-      context: 'A Java sync path writes each job once instead of once per integration level (85 → 25 calls on a 21-job sync).',
-    },
-    {
-      value: '470→135 GB',
-      label: 'Alert scan volume',
-      context: 'Recording rules moved from 1-hour to 5-minute windows as part of an on-call redesign.',
-    },
-    {
-      value: '24→84%',
-      label: 'Test coverage',
-      context: 'Line coverage on the bidding service; branch coverage went from 5% to 54%.',
-    },
-    {
-      value: '$800/mo',
-      label: 'Warehouse cost',
-      context: 'Saved by restructuring scheduled Snowflake queries behind the bidding engine.',
-    },
-    {
-      value: '13.9M',
-      label: 'Orphaned rows cleaned',
-      context: 'Deleted at 2,000–2,500/s with a resync behind it, then fixed the delete path that caused them.',
+      name: 'parth.codes',
+      url: 'https://parth.codes',
+      domain: 'parth.codes',
+      tagline: 'Interactive birthday cards, date calculators and real-time multiplayer games in the browser.',
+      points: [
+        'Live game rooms for poker, Mafia, Connect Four and tic-tac-toe, each on a Cloudflare Durable Object that holds room state and enforces the rules on the server.',
+        'Game engines written as pure, tested TypeScript, with an alpha-beta computer player running in a Web Worker.',
+        'Next.js on Cloudflare Pages at the edge, with publish-date–gated guides and a dynamic sitemap.',
+      ],
+      stack: ['TypeScript', 'Next.js', 'Cloudflare Workers', 'Durable Objects', 'WebSockets'],
     },
   ],
   skills: [
-    { name: 'Languages', items: ['Java', 'SQL', 'JavaScript'] },
+    { name: 'Languages', items: ['Java', 'SQL'] },
     { name: 'Frameworks', items: ['Spring Boot', 'Spring', 'JPA / Hibernate', 'jOOQ', 'Quartz', 'DMN rules'] },
     { name: 'Messaging', items: ['Apache Kafka', 'AWS SQS', 'AWS SNS', 'Webhooks', 'Event-driven architecture'] },
     { name: 'Data', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'ScyllaDB', 'Snowflake', 'Elasticsearch'] },

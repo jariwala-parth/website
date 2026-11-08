@@ -20,18 +20,19 @@ export default function About() {
 
         <Reveal delay={0.1}>
           <div className="rounded-xl border border-line bg-surface p-5">
-            <div className="flex items-center gap-4">
-              <img
-                src="/images/parth.png"
-                alt="Parth Jariwala"
-                width={64}
-                height={64}
-                className="h-16 w-16 rounded-lg object-cover border border-line"
-              />
-              <div>
-                <p className="font-medium">{profile.name}</p>
-                <p className="font-mono text-xs text-subtle mt-0.5">{profile.title}</p>
+            <div className="flex flex-col items-center text-center">
+              {/* The source image has a white background and a baked-in ring; scaling inside a round mask crops both out. */}
+              <div className="h-36 w-36 overflow-hidden rounded-full ring-2 ring-accent/40 ring-offset-4 ring-offset-surface">
+                <img
+                  src="/images/parth.png"
+                  alt="Parth Jariwala"
+                  width={288}
+                  height={288}
+                  className="h-full w-full scale-[1.08] object-cover"
+                />
               </div>
+              <p className="mt-4 text-lg font-medium">{profile.name}</p>
+              <p className="font-mono text-xs text-accent mt-1">{profile.title}</p>
             </div>
             <dl className="mt-5 space-y-3 border-t border-line pt-5 text-sm">
               <div className="flex items-start gap-3">

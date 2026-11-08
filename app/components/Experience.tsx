@@ -11,12 +11,18 @@ function CompanyCard({ job }: { job: Company }) {
     <article className="overflow-hidden rounded-2xl border border-line bg-surface">
       <header className="border-b border-line bg-raised/60 p-5 sm:p-7">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-          <div
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-line bg-surface font-mono text-lg font-semibold text-accent"
-            aria-hidden="true"
-          >
-            {job.monogram}
-          </div>
+          {job.logo ? (
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-line bg-white p-3 shadow-sm">
+              <img src={job.logo} alt={`${job.company} logo`} width={40} height={40} className="h-full w-full object-contain" />
+            </div>
+          ) : (
+            <div
+              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-line bg-surface font-mono text-lg font-semibold text-accent"
+              aria-hidden="true"
+            >
+              {job.monogram}
+            </div>
+          )}
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <h3 className="text-2xl font-semibold tracking-tight">

@@ -13,6 +13,7 @@ export interface WorkArea {
 export interface Company {
   company: string;
   monogram: string;
+  logo?: string;
   url?: string;
   location: string;
   duration: string;
@@ -21,10 +22,13 @@ export interface Company {
   areas: WorkArea[];
 }
 
-export interface Metric {
-  value: string;
-  label: string;
-  context: string;
+export interface SideProject {
+  name: string;
+  url: string;
+  domain: string;
+  tagline: string;
+  points: string[];
+  stack: string[];
 }
 
 export interface SkillGroup {
@@ -54,7 +58,7 @@ export interface Profile {
   focus: string[];
   stats: { value: string; label: string }[];
   experience: Company[];
-  metrics: Metric[];
+  projects: SideProject[];
   skills: SkillGroup[];
   education: Education[];
   socialLinks: SocialLinks;
