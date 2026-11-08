@@ -1,131 +1,133 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { profile } from '../data/profile';
-import { FiLinkedin, FiGithub, FiInstagram, FiMail } from 'react-icons/fi';
 import Link from 'next/link';
+import { FiArrowRight, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { profile } from '../data/profile';
 
-const Hero = () => {
-  const { name, title, about, socialLinks } = profile;
+const K = ({ children }: { children: string }) => <span className="text-syn-key">&quot;{children}&quot;</span>;
+const S = ({ children }: { children: string }) => <span className="text-syn-str">&quot;{children}&quot;</span>;
+const N = ({ children }: { children: string | number }) => <span className="text-syn-num">{children}</span>;
+const P = ({ children }: { children: string }) => <span className="text-syn-punc">{children}</span>;
+
+function StringArray({ items, indent }: { items: string[]; indent: string }) {
+  return (
+    <>
+      <P>[</P>
+      {'\n'}
+      {items.map((item, i) => (
+        <span key={item}>
+          {indent}  <S>{item}</S>
+          {i < items.length - 1 && <P>,</P>}
+          {'\n'}
+        </span>
+      ))}
+      {indent}
+      <P>]</P>
+    </>
+  );
+}
+
+function Terminal() {
+  const { name, title, focus } = profile;
+  const stack = ['Java', 'Spring Boot', 'Kafka', 'AWS'];
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center py-20 md:py-0">
-      {/* Subtle background effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-1/4 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-blob"></div>
-        <div className="absolute top-40 right-1/4 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-40 left-1/3 w-80 h-80 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-blob animation-delay-4000"></div>
+    <div className="rounded-xl border border-line bg-surface shadow-[0_20px_60px_-30px_rgba(0,0,0,0.5)] overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-line bg-raised px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+        <span className="ml-3 font-mono text-[11px] text-subtle truncate">zsh — parth@prod</span>
       </div>
-      
-      <div className="container px-6 py-12 mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 relative"
-          >
-            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg mx-auto relative">
-              <img 
-                src={"/images/parth.png"}
-                alt="Parth Jariwala" 
-                width="400"
-                height="400"
-                className="object-cover w-full h-full"
-              />
+      <pre className="overflow-x-auto p-4 sm:p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed text-fg">
+        <span className="text-accent">$</span> curl -s theparthjariwala.com/api/me | jq{'\n'}
+        <span className="text-subtle">HTTP/2 </span>
+        <N>200</N>
+        <span className="text-subtle"> OK</span>
+        {'\n'}
+        <P>{'{'}</P>
+        {'\n'}
+        {'  '}<K>name</K><P>: </P><S>{name}</S><P>,</P>{'\n'}
+        {'  '}<K>role</K><P>: </P><S>{title}</S><P>,</P>{'\n'}
+        {'  '}<K>company</K><P>: </P><S>Joveo</S><P>,</P>{'\n'}
+        {'  '}<K>years</K><P>: </P><N>7</N><P>,</P>{'\n'}
+        {'  '}<K>stack</K><P>: </P><StringArray items={stack} indent="  " /><P>,</P>{'\n'}
+        {'  '}<K>focus</K><P>: </P><StringArray items={focus} indent="  " /><P>,</P>{'\n'}
+        {'  '}<K>open_to_chat</K><P>: </P><N>true</N>{'\n'}
+        <P>{'}'}</P>
+        {'\n'}
+        <span className="text-accent">$</span>
+        <span className="cursor" aria-hidden="true" />
+      </pre>
+    </div>
+  );
+}
+
+export default function Hero() {
+  const { name, title, headline, location, socialLinks } = profile;
+
+  return (
+    <section id="home" className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
+      <div className="bg-grid absolute inset-0 -z-10" aria-hidden="true" />
+      <div className="mx-auto grid max-w-page items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs text-muted">
+            <span className="status-dot h-2 w-2 rounded-full bg-accent" />
+            Building at Joveo · {location}
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
+            {name}
+          </h1>
+          <p className="mt-3 font-mono text-base sm:text-lg text-accent">{title}</p>
+
+          <p className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted">{headline}</p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link
+              href="#experience"
+              className="group inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-accent-fg hover:opacity-90 transition-opacity"
+            >
+              See my work
+              <FiArrowRight className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href={`mailto:${socialLinks.email}`}
+              className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm font-medium text-fg hover:border-subtle transition-colors"
+            >
+              Get in touch
+            </Link>
+            <div className="ml-1 flex items-center gap-1">
+              {[
+                { href: socialLinks.github, label: 'GitHub', Icon: FiGithub },
+                { href: socialLinks.linkedin, label: 'LinkedIn', Icon: FiLinkedin },
+                { href: `mailto:${socialLinks.email}`, label: 'Email', Icon: FiMail },
+              ].map(({ href, label, Icon }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-md text-muted hover:text-fg hover:bg-raised transition-colors"
+                >
+                  <Icon size={18} />
+                </Link>
+              ))}
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold mb-2">
-              Hi, I'm <span className="text-blue-600">{name}</span>
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
-              {title}
-            </h2>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mb-8"
-          >
-            {about}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="flex items-center space-x-6"
-          >
-            <Link 
-              href={socialLinks.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon-link group"
-              aria-label="LinkedIn"
-            >
-              <div className="social-icon bg-blue-50 dark:bg-blue-900/20 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30">
-                <FiLinkedin className="text-blue-600 dark:text-blue-400" />
-              </div>
-            </Link>
-            <Link
-              href={socialLinks.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon-link group"
-              aria-label="GitHub"
-            >
-              <div className="social-icon bg-gray-50 dark:bg-gray-800/40 group-hover:bg-gray-100 dark:group-hover:bg-gray-800/60">
-                <FiGithub className="text-gray-800 dark:text-gray-300" />
-              </div>
-            </Link>
-            <Link
-              href={socialLinks.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon-link group"
-              aria-label="Instagram"
-            >
-              <div className="social-icon bg-pink-50 dark:bg-pink-900/20 group-hover:bg-pink-100 dark:group-hover:bg-pink-900/30">
-                <FiInstagram className="text-pink-600 dark:text-pink-400" />
-              </div>
-            </Link>
-            <Link
-              href="mailto:theparthjariwala@gmail.com"
-              className="social-icon-link group"
-              aria-label="Email"
-            >
-              <div className="social-icon bg-red-50 dark:bg-red-900/20 group-hover:bg-red-100 dark:group-hover:bg-red-900/30">
-                <FiMail className="text-red-600 dark:text-red-400" />
-              </div>
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-10"
-          >
-            <Link 
-              href="#about"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            >
-              Learn More
-            </Link>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.15 }}
+          className="min-w-0"
+        >
+          <Terminal />
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default Hero; 
+}

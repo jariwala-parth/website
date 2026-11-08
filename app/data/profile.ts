@@ -1,119 +1,149 @@
 import { Profile } from '../types/profile';
 
 export const profile: Profile = {
-  name: "Parth Jariwala",
-  title: "Software Engineer",
-  location: "Surat, Gujarat, India",
-  about: "Skilled Software Engineer specializing in Java, Spring, AWS and microservices. Passionate about crafting robust backend systems and elegant APIs that solve real-world problems.",
+  name: 'Parth Jariwala',
+  title: 'Senior Backend Engineer',
+  location: 'Surat, India · Remote',
+  headline:
+    'I design and run the backend systems behind programmatic job advertising: event-driven pipelines, partner integrations and bidding automation on Java, Kafka and AWS.',
+  summary: [
+    "I've spent 7+ years building backend systems, the last four at Joveo, where my work sits between high-volume job data and the money spent advertising it. I like problems where correctness, cost and latency all matter at once.",
+    "Most of what I ship is unglamorous on purpose: idempotent consumers, locks that prevent double runs, alerts that page only when something is actually wrong. I'd rather find the mechanism behind an incident than patch the symptom.",
+    'These days I also lead: setting up how a team takes on work, reviewing designs and PRs, running on-call, and mentoring the engineers and interns who join it.',
+  ],
+  focus: ['distributed systems', 'event-driven pipelines', 'API integrations', 'reliability'],
+  stats: [
+    { value: '7+', label: 'years in backend' },
+    { value: '4+', label: 'years at Joveo' },
+    { value: '7', label: 'ATS integrations in prod' },
+    { value: '80%', label: 'faster feed-to-live' },
+  ],
   experience: [
     {
-      title: "Software Engineer II",
-      company: "Joveo",
-      duration: "Jan 2024 - Present",
-      description: "Team Leadership, Mentoring and various technical skills.",
-      location: "Surat, Gujarat, India (Remote)"
+      company: 'Joveo',
+      monogram: 'J',
+      url: 'https://www.joveo.com',
+      location: 'Remote',
+      duration: 'Apr 2022 – Present',
+      tagline: 'Backend for programmatic recruitment advertising: integrations, bidding automation and job data pipelines.',
+      roles: [
+        { title: 'Software Engineer II', duration: 'Jan 2024 – Present' },
+        { title: 'Software Engineer', duration: 'Apr 2022 – Dec 2023' },
+      ],
+      areas: [
+        {
+          name: 'ATS Partner Integrations',
+          period: '2025 – Present',
+          points: [
+            'Took ownership of the Partner Integration function and became its technical lead, delivering 7 production ATS integrations and ~18 integration and demo builds across platforms such as Greenhouse, Workday and SAP SuccessFactors.',
+            'Co-designed a unified webhook-to-Kafka event architecture with SLA/TTL handling and dead-letter queues, and moved ATS event flows off SQS onto Kafka.',
+            'Replaced JSONata datamodel syncs with a Java path that writes each job once: ~70% fewer partner API calls and ~5× fewer Kafka events per sync.',
+            'Rebuilt on-call around P0-only paging and tuned alert rules, cutting alert scan volume from 470 GB to 135 GB.',
+          ],
+          stack: ['Java', 'Spring Boot', 'Kafka', 'Webhooks', 'OAuth2', 'PostgreSQL'],
+        },
+        {
+          name: 'AutoTrader & Bidding Automation',
+          period: '2023 – 2025',
+          points: [
+            'Built core services of AutoTrader, which bids autonomously on job ads across publishers against client goals (CPC, CPA, CPAS, CPH).',
+            'Shipped spend-wastage, title-expansion and monthly bid-reset algorithms, then extended AutoTrader to TCPA and Easy Apply publishers. AutoTrader-managed spend grew from 6% to 25% in one quarter.',
+            'Built a DMN-based experimentation engine and a backtesting framework so data scientists could validate bidding algorithms before rollout.',
+            'Cut ~$800/month in Snowflake spend by reworking cron queries, and raised the service’s test coverage from 24% to 84%.',
+          ],
+          stack: ['Java', 'Kafka', 'Snowflake', 'MySQL', 'Quartz', 'Kubernetes'],
+        },
+        {
+          name: 'Feed Ingestion & Batch Processing',
+          period: '2022 – 2024',
+          points: [
+            'Moved feed orchestration to Kafka events so changes run immediately, cutting time from feed mapping to sponsored jobs by 80% (120 → 20 min).',
+            'Merged downloader and processor microservices on AWS Batch with checkpointed retries for spot interruptions, bringing feed SLA misses close to zero.',
+            'Later re-architected batch orchestration with distributed locking to stop duplicate parallel runs against 3–6 hour SLAs.',
+          ],
+          stack: ['AWS Batch', 'Lambda', 'S3', 'EventBridge', 'Redis', 'ScyllaDB'],
+        },
+      ],
     },
     {
-      title: "Software Engineer",
-      company: "Joveo",
-      duration: "Apr 2022 - Dec 2023",
-      description: "Working with Jenkins, Amazon Web Services (AWS) and other technologies.",
-      location: "Surat, Gujarat, India (Remote)"
+      company: 'Jeavio',
+      monogram: 'Je',
+      location: 'Vadodara, India',
+      duration: 'Dec 2018 – Mar 2022',
+      tagline: 'Product engineering for SevOne NMS, a network monitoring platform.',
+      roles: [
+        { title: 'Software Engineer', duration: 'Jun 2020 – Mar 2022' },
+        { title: 'Associate Software Engineer', duration: 'May 2019 – May 2020' },
+        { title: 'Intern', duration: 'Dec 2018 – Mar 2019' },
+      ],
+      areas: [
+        {
+          name: 'SevOne NMS APIs',
+          period: '2019 – 2022',
+          points: [
+            'Built Java Spring REST APIs to store and query network monitoring data, used by NMS operators and SevOne solutions.',
+            'Grew from intern to software engineer, starting with data-structure–heavy work on the platform core.',
+          ],
+          stack: ['Java', 'Spring', 'REST', 'MySQL'],
+        },
+      ],
+    },
+  ],
+  metrics: [
+    {
+      value: '120→20 min',
+      label: 'Feed to live',
+      context: 'Event-driven orchestration replaced polling, so feed changes start processing as soon as they happen.',
     },
     {
-      title: "Software Engineer",
-      company: "Jeavio",
-      duration: "Jun 2020 - Mar 2022",
-      description: "Worked on SevOne NMS (Network monitoring system). Built APIs to store and retrieve data, which are used by NMS users or SevOne solutions. These APIs are written in Java Spring.",
-      location: "Vadodara, Gujarat, India"
+      value: '−70%',
+      label: 'Partner API calls',
+      context: 'A Java sync path writes each job once instead of once per integration level (85 → 25 calls on a 21-job sync).',
     },
     {
-      title: "Associate Software Engineer",
-      company: "Jeavio",
-      duration: "May 2019 - May 2020",
-      description: "Data Structures focused role.",
-      location: "Vadodara, Gujarat, India"
+      value: '470→135 GB',
+      label: 'Alert scan volume',
+      context: 'Recording rules moved from 1-hour to 5-minute windows as part of an on-call redesign.',
     },
     {
-      title: "Intern",
-      company: "Jeavio",
-      duration: "Dec 2018 - Mar 2019",
-      description: "Internship experience in software development.",
-      location: "Vadodara, Gujarat, India"
-    }
+      value: '24→84%',
+      label: 'Test coverage',
+      context: 'Line coverage on the bidding service; branch coverage went from 5% to 54%.',
+    },
+    {
+      value: '$800/mo',
+      label: 'Warehouse cost',
+      context: 'Saved by restructuring scheduled Snowflake queries behind the bidding engine.',
+    },
+    {
+      value: '13.9M',
+      label: 'Orphaned rows cleaned',
+      context: 'Deleted at 2,000–2,500/s with a resync behind it, then fixed the delete path that caused them.',
+    },
+  ],
+  skills: [
+    { name: 'Languages', items: ['Java', 'SQL', 'JavaScript'] },
+    { name: 'Frameworks', items: ['Spring Boot', 'Spring', 'JPA / Hibernate', 'jOOQ', 'Quartz', 'DMN rules'] },
+    { name: 'Messaging', items: ['Apache Kafka', 'AWS SQS', 'AWS SNS', 'Webhooks', 'Event-driven architecture'] },
+    { name: 'Data', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'ScyllaDB', 'Snowflake', 'Elasticsearch'] },
+    {
+      name: 'Cloud & Infra',
+      items: ['AWS Batch', 'Lambda', 'EC2', 'S3', 'EventBridge', 'Secrets Manager', 'Docker', 'Kubernetes', 'Helm', 'Terraform', 'Jenkins'],
+    },
+    { name: 'Observability', items: ['Grafana', 'Prometheus alerting', 'CloudWatch', 'Incident response & RCA'] },
+    { name: 'Practice', items: ['System design', 'Sharding & partitioning', 'Concurrency', 'Code review', 'Mentoring', 'Hiring'] },
   ],
   education: [
     {
-      degree: "Bachelor of Technology, Information Technology",
-      university: "Dharmsinh Desai University",
-      duration: "2015 - 2019",
-    }
-  ],
-  skills: [
-    { name: "Java", highlighted: true },
-    { name: "Spring Framework", highlighted: false },
-    { name: "Spring Boot", highlighted: true },
-    { name: "Microservices", highlighted: true },
-    { name: "Data Structures", highlighted: false },
-    { name: "Concurrency & Multithreading", highlighted: false },
-    { name: "Design Patterns", highlighted: false },
-    { name: "AWS", highlighted: true, expandable: true, services: [
-      "AWS Lambda",
-      "Amazon Simple Queue Service (SQS)",
-      "Amazon Simple Notification Service (SNS)",
-      "Amazon EC2",
-      "Amazon S3",
-      "AWS IAM",
-      "Amazon ECR",
-      "AWS Batch",
-      "AWS Secrets Manager",
-      "Amazon Cognito",
-      "Amazon DynamoDB"
-    ]},
-    { name: "Docker", highlighted: false },
-    { name: "DevOps", highlighted: false },
-    { name: "Terraform", highlighted: false },
-    { name: "Kubernetes", highlighted: true },
-    { name: "Helm", highlighted: false },
-    { name: "Jenkins", highlighted: false },
-    { name: "Apache Kafka", highlighted: true },
-    { name: "Event-Driven Architecture", highlighted: false },
-    { name: "MongoDB", highlighted: false },
-    { name: "Redis", highlighted: true },
-    { name: "MySQL", highlighted: false },
-    { name: "PostgreSQL", highlighted: true },
-    { name: "Snowflake", highlighted: false },
-    { name: "Sharding & Partitioning", highlighted: false },
-    { name: "Systems Design", highlighted: true },
-    { name: "Team Leadership", highlighted: false },
-    { name: "Mentoring", highlighted: true },
-    { name: "Code Reviews & Best Practices", highlighted: false },
-    { name: "Git", highlighted: false }
-  ],
-  projects: [
-    {
-      title: "Software License Management",
-      description: "Developed a Software License Management system using PHP, JavaScript, MySQL, HTML, CSS, and Bootstrap.",
-      duration: "May 2018 - Dec 2019",
-      association: "Dharmsinh Desai University",
-      technologies: ["PHP", "JavaScript", "MySQL", "HTML", "CSS", "Bootstrap"],
+      degree: 'B.Tech, Information Technology',
+      university: 'Dharmsinh Desai University',
+      duration: '2015 – 2019',
     },
-    {
-      title: "MCQ Android Application",
-      description: "Created an Android application for multiple-choice questions.",
-      duration: "Aug 2018 - Feb 2019",
-      technologies: ["Android", "Java"],
-    },
-    {
-      title: "Network Monitoring System",
-      description: "Built APIs for SevOne NMS to store and retrieve monitoring data for network systems.",
-      duration: "Jun 2020 - Mar 2022",
-      technologies: ["Java", "Spring", "RESTful APIs"],
-    }
   ],
   socialLinks: {
-    linkedin: "https://www.linkedin.com/in/parth-jariwala/",
-    github: "https://github.com/jariwala-parth",
-    instagram: "https://www.instagram.com/theparthjariwala/"
-  }
-}; 
+    linkedin: 'https://www.linkedin.com/in/parth-jariwala/',
+    github: 'https://github.com/jariwala-parth',
+    instagram: 'https://www.instagram.com/theparthjariwala/',
+    email: 'theparthjariwala@gmail.com',
+  },
+};

@@ -1,60 +1,45 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState('dark');
-  
-  // Initialize theme on mount
+type Theme = 'dark' | 'light';
+
+export default function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>('dark');
+
   useEffect(() => {
-    // Get default theme from environment variable
-    let defaultTheme = process.env.DEFAULT_THEME || 'dark';
-    // Ensure it's a valid option
-    if (!['dark', 'light'].includes(defaultTheme)) {
-      defaultTheme = 'dark';
+    let initial: Theme = process.env.DEFAULT_THEME === 'light' ? 'light' : 'dark';
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') initial = saved;
+    } catch {
+      /* storage unavailable: fall back to default */
     }
-    
-    // If theme already exists in localStorage, use it
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme && ['dark', 'light'].includes(savedTheme)) {
-      setTheme(savedTheme);
-    } else {
-      // Default to environment variable setting if no preference exists
-      setTheme(defaultTheme);
-      localStorage.setItem('theme', defaultTheme);
-    }
+    setTheme(initial);
   }, []);
-  
-  // Apply theme changes
+
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
-  
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+
+  const toggle = () => {
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* ignore */
+    }
   };
-  
+
   return (
     <button
-      onClick={toggleTheme}
-      className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all text-3xl"
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      onClick={toggle}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-line text-muted hover:text-fg hover:border-subtle transition-colors"
+      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
-      {theme === 'dark' ? (
-        <FiSun className="text-yellow-400" />
-      ) : (
-        <FiMoon className="text-blue-700" />
-      )}
+      {theme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
     </button>
   );
-};
-
-export default ThemeToggle; 
+}

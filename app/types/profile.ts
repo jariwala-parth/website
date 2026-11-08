@@ -1,16 +1,35 @@
-export interface Skill {
-  name: string;
-  highlighted: boolean;
-  expandable?: boolean;
-  services?: string[];
+export interface Role {
+  title: string;
+  duration: string;
 }
 
-export interface Experience {
-  title: string;
+export interface WorkArea {
+  name: string;
+  period: string;
+  points: string[];
+  stack?: string[];
+}
+
+export interface Company {
   company: string;
-  duration: string;
-  description: string;
+  monogram: string;
+  url?: string;
   location: string;
+  duration: string;
+  tagline: string;
+  roles: Role[];
+  areas: WorkArea[];
+}
+
+export interface Metric {
+  value: string;
+  label: string;
+  context: string;
+}
+
+export interface SkillGroup {
+  name: string;
+  items: string[];
 }
 
 export interface Education {
@@ -19,28 +38,24 @@ export interface Education {
   duration: string;
 }
 
-export interface Project {
-  title: string;
-  description: string;
-  duration: string;
-  association?: string;
-  technologies: string[];
-}
-
 export interface SocialLinks {
   linkedin: string;
   github: string;
   instagram: string;
+  email: string;
 }
 
 export interface Profile {
   name: string;
   title: string;
   location: string;
-  about: string;
-  experience: Experience[];
+  headline: string;
+  summary: string[];
+  focus: string[];
+  stats: { value: string; label: string }[];
+  experience: Company[];
+  metrics: Metric[];
+  skills: SkillGroup[];
   education: Education[];
-  skills: Skill[];
-  projects: Project[];
   socialLinks: SocialLinks;
-} 
+}
