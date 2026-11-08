@@ -49,7 +49,7 @@ export const profile: Profile = {
           points: [
             'Built core services of AutoTrader, which bids autonomously on job ads across publishers against client goals (CPC, CPA, CPAS, CPH).',
             'Shipped spend-wastage, title-expansion and monthly bid-reset algorithms, then extended AutoTrader to TCPA and Easy Apply publishers. AutoTrader-managed spend grew from 6% to 25% in one quarter.',
-            'Built a DMN-based experimentation engine and a backtesting framework so data scientists could validate bidding algorithms before rollout.',
+            'Built a Kafka consumer that resets job-level bids as job groups or publishers leave AutoTrader, and fixed a Quartz scheduling bug where one slow client could stall rule runs for every other client.',
             'Cut ~$800/month in Snowflake spend by reworking cron queries, and raised the service’s test coverage from 24% to 84%.',
           ],
           stack: ['Java', 'Kafka', 'Snowflake', 'MySQL', 'Quartz', 'Kubernetes'],
