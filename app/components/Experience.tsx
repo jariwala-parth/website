@@ -11,7 +11,11 @@ function CompanyCard({ job }: { job: Company }) {
     <article className="overflow-hidden rounded-2xl border border-line bg-surface">
       <header className="border-b border-line bg-raised/60 p-5 sm:p-7">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-          {job.logo ? (
+          {job.logo && job.logoFit === 'cover' ? (
+            <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-line shadow-sm">
+              <img src={job.logo} alt={`${job.company} logo`} width={64} height={64} className="h-full w-full object-cover" />
+            </div>
+          ) : job.logo ? (
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-line bg-white p-3 shadow-sm">
               <img src={job.logo} alt={`${job.company} logo`} width={40} height={40} className="h-full w-full object-contain" />
             </div>

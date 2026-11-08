@@ -14,6 +14,8 @@ export interface Company {
   company: string;
   monogram: string;
   logo?: string;
+  /** 'cover' for logos that are already a filled square tile */
+  logoFit?: 'contain' | 'cover';
   url?: string;
   location: string;
   duration: string;

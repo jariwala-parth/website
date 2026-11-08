@@ -69,6 +69,9 @@ export const profile: Profile = {
     {
       company: 'Jeavio',
       monogram: 'Je',
+      logo: '/images/jeavio-mark.png',
+      logoFit: 'cover',
+      url: 'https://jeavio.com',
       location: 'Vadodara, India',
       duration: 'Dec 2018 – Mar 2022',
       tagline: 'Product engineering for SevOne NMS, a network monitoring platform.',
