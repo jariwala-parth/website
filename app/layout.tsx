@@ -20,10 +20,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://theparthjariwala.com'),
   title: {
-    default: 'Parth Jariwala · Senior Backend Engineer',
+    default: 'Parth Jariwala · Software Engineer II',
     template: '%s | Parth Jariwala'
   },
-  description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
+  description: 'Software Engineer II building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
   keywords: ['Parth Jariwala', 'Software Engineer', 'Java Developer', 'Spring', 'AWS', 'Microservices', 'Backend Developer', 'Surat', 'India'],
   authors: [{ name: 'Parth Jariwala' }],
   creator: 'Parth Jariwala',
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://theparthjariwala.com',
     siteName: 'Parth Jariwala',
-    title: 'Parth Jariwala · Senior Backend Engineer',
-    description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
+    title: 'Parth Jariwala · Software Engineer II',
+    description: 'Software Engineer II building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
     images: [
       {
         url: 'https://theparthjariwala.com/og-image.jpg',
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Parth Jariwala · Senior Backend Engineer',
-    description: 'Senior backend engineer building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
+    title: 'Parth Jariwala · Software Engineer II',
+    description: 'Software Engineer II building event-driven pipelines, partner integrations and bidding automation with Java, Spring Boot, Kafka and AWS.',
     images: ['https://theparthjariwala.com/og-image.jpg'],
     creator: '@parthjariwala',
   },
@@ -160,7 +160,7 @@ export default function RootLayout({
               '@context': 'http://schema.org',
               '@type': 'Person',
               name: 'Parth Jariwala',
-              jobTitle: 'Senior Backend Engineer',
+              jobTitle: 'Software Engineer II',
               worksFor: { '@type': 'Organization', name: 'Joveo' },
               url: 'https://theparthjariwala.com',
               sameAs: [
