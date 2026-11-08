@@ -2,7 +2,7 @@ import { Profile } from '../types/profile';
 
 export const profile: Profile = {
   name: 'Parth Jariwala',
-  title: 'Senior Backend Engineer',
+  title: 'Software Engineer II',
   location: 'Surat, India · Remote',
   headline:
     'I design and run the backend systems behind programmatic job advertising: event-driven pipelines, partner integrations and bidding automation on Java, Kafka and AWS.',
