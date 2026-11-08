@@ -36,12 +36,12 @@ export const profile: Profile = {
           name: 'ATS Partner Integrations',
           period: '2025 – Present',
           points: [
-            'Took ownership of the Partner Integration function and became its technical lead, delivering 7 production ATS integrations and ~18 integration and demo builds across platforms such as Greenhouse, Workday and SAP SuccessFactors.',
+            'Took ownership of the Partner Integration function and became its technical lead, delivering 7 production ATS integrations and ~18 integration and demo builds across platforms such as Greenhouse, Jobylon, Ashby and SAP SuccessFactors.',
             'Co-designed a unified webhook-to-Kafka event architecture with SLA/TTL handling and dead-letter queues, and moved ATS event flows off SQS onto Kafka.',
-            'Replaced JSONata datamodel syncs with a Java path that writes each job once: ~70% fewer partner API calls and ~5× fewer Kafka events per sync.',
+            'Consolidated six Java integration services into ats-integration-service, a single TypeScript platform deployed three ways: an API for webhooks and writes back to the ATS, Kafka stream consumers, and an AWS Batch sync worker.',
             'Rebuilt on-call around P0-only paging and tuned alert rules, cutting alert scan volume from 470 GB to 135 GB.',
           ],
-          stack: ['Java', 'Spring Boot', 'Kafka', 'Webhooks', 'OAuth2', 'PostgreSQL'],
+          stack: ['TypeScript', 'Java', 'Kafka', 'PostgreSQL', 'Redis', 'AWS Batch', 'Webhooks'],
         },
         {
           name: 'AutoTrader & Bidding Automation',
