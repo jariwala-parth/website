@@ -27,7 +27,7 @@ const nextConfig = {
   },
   // Add security headers and CDN caching directives
   async headers() {
-    return [
+    const rules = [
       {
         // Proper content type for CSS files
         source: '/_next/static/css/:path*',
@@ -134,7 +134,14 @@ const nextConfig = {
           }
         ]
       }
-    ]
+    ];
+    // Long-lived immutable caching is only safe for production's content-hashed
+    // filenames. Dev chunks keep fixed names (e.g. app/page.js), so caching them
+    // makes the browser run stale modules after edits. Keep security headers only.
+    if (process.env.NODE_ENV !== 'production') {
+      return rules.filter((r) => r.source === '/:path*');
+    }
+    return rules;
   },
   // Webpack optimization
   webpack: (config, { dev, isServer }) => {
