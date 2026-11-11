@@ -110,13 +110,15 @@ export const profile: Profile = {
       name: 'parth.codes',
       url: 'https://parth.codes',
       domain: 'parth.codes',
-      tagline: 'Interactive birthday cards, date calculators and real-time multiplayer games in the browser.',
+      tagline:
+        'A free online card maker for every occasion (birthdays, graduations, anniversaries, weddings, thank-yous and apologies), sent as one shareable link. Plus date calculators and real-time multiplayer games.',
       points: [
-        'Live game rooms for poker, Mafia, Connect Four and tic-tac-toe, each on a Cloudflare Durable Object that holds room state and enforces the rules on the server.',
-        'Game engines written as pure, tested TypeScript, with an alpha-beta computer player running in a Web Worker.',
-        'Next.js on Cloudflare Pages at the edge, with publish-date–gated guides and a dynamic sitemap.',
+        'Cards open from an envelope on any phone, with a design per occasion, the sender’s photo, a countdown to the day and an optional “Will you be my Valentine?” question first; birthday cakes are blown out through the microphone.',
+        'Paid custom card links through Razorpay (UPI, Indian cards and PayPal), backed by a Python API on AWS Lambda and DynamoDB that unlocks PRO designs only after the payment is verified.',
+        'Live game rooms for poker, Mafia, Connect Four and tic-tac-toe on Cloudflare Durable Objects, with tested TypeScript engines and an alpha-beta computer player in a Web Worker.',
+        'Next.js on Cloudflare Pages at the edge, with landing pages per occasion, publish-date–gated guides and a dynamic sitemap.',
       ],
-      stack: ['TypeScript', 'Next.js', 'Cloudflare Workers', 'Durable Objects', 'WebSockets'],
+      stack: ['TypeScript', 'Next.js', 'Cloudflare Workers', 'Durable Objects', 'Python', 'AWS Lambda', 'DynamoDB', 'Razorpay'],
     },
   ],
   skills: [
