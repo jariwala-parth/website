@@ -107,18 +107,29 @@ export const profile: Profile = {
       stack: ['Java 21', 'Spring Boot', 'AWS Lambda', 'DynamoDB', 'Cognito', 'Next.js', 'Cloudflare'],
     },
     {
+      name: 'CardLinks',
+      url: 'https://cardlinks.co',
+      domain: 'cardlinks.co',
+      tagline:
+        'A free online card maker for every occasion (birthdays, graduations, anniversaries, weddings, thank-yous and apologies), sent as one shareable link, plus date calculators and message guides.',
+      points: [
+        'Cards open from an envelope on any phone, with a design per occasion, the sender’s photo, a countdown to the day and an optional “Will you be my Valentine?” question first; birthday cakes are blown out through the microphone.',
+        '“Write it for me” message ideas from Llama 3.3 on Cloudflare Workers AI, with a brief per occasion and tone, edge-cached answers and per-IP rate limits.',
+        'Paid custom card links through Razorpay (UPI, Indian cards and PayPal), backed by a Python API on AWS Lambda and DynamoDB that unlocks PRO designs only after the payment is verified.',
+        'Next.js on Cloudflare Pages at the edge, with landing pages per occasion, publish-date–gated guides and a dynamic sitemap; moved from parth.codes to its own domain with path-preserving redirects.',
+      ],
+      stack: ['TypeScript', 'Next.js', 'Cloudflare Pages', 'Workers AI', 'Python', 'AWS Lambda', 'DynamoDB', 'Razorpay'],
+    },
+    {
       name: 'parth.codes',
       url: 'https://parth.codes',
       domain: 'parth.codes',
-      tagline:
-        'A free online card maker for every occasion (birthdays, graduations, anniversaries, weddings, thank-yous and apologies), sent as one shareable link. Plus date calculators and real-time multiplayer games.',
+      tagline: 'Free browser games to play with friends: share a link and play together, no sign-up.',
       points: [
-        'Cards open from an envelope on any phone, with a design per occasion, the sender’s photo, a countdown to the day and an optional “Will you be my Valentine?” question first; birthday cakes are blown out through the microphone.',
-        'Paid custom card links through Razorpay (UPI, Indian cards and PayPal), backed by a Python API on AWS Lambda and DynamoDB that unlocks PRO designs only after the payment is verified.',
-        'Live game rooms for poker, Mafia, Connect Four and tic-tac-toe on Cloudflare Durable Objects, with tested TypeScript engines and an alpha-beta computer player in a Web Worker.',
-        'Next.js on Cloudflare Pages at the edge, with landing pages per occasion, publish-date–gated guides and a dynamic sitemap.',
+        'Live game rooms for poker, Mafia, Connect Four and tic-tac-toe on Cloudflare Durable Objects over WebSockets.',
+        'Tested TypeScript game engines, with an alpha-beta computer player running in a Web Worker, plus single-player Minesweeper.',
       ],
-      stack: ['TypeScript', 'Next.js', 'Cloudflare Workers', 'Durable Objects', 'Python', 'AWS Lambda', 'DynamoDB', 'Razorpay'],
+      stack: ['TypeScript', 'Next.js', 'Cloudflare Workers', 'Durable Objects', 'WebSockets'],
     },
   ],
   skills: [
