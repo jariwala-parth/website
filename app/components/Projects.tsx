@@ -5,6 +5,18 @@ import { FiArrowUpRight } from 'react-icons/fi';
 import { profile } from '../data/profile';
 import Section, { Reveal } from './Section';
 
+/**
+ * The project link with UTM tags. The links open with rel="noreferrer", so
+ * without them a visit from here arrives in the project's analytics as direct.
+ */
+function tracked(url: string): string {
+  const link = new URL(url);
+  link.searchParams.set('utm_source', 'theparthjariwala.com');
+  link.searchParams.set('utm_medium', 'referral');
+  link.searchParams.set('utm_campaign', 'portfolio');
+  return link.toString();
+}
+
 export default function Projects() {
   return (
     <Section
@@ -22,7 +34,7 @@ export default function Projects() {
                 <div>
                   <h3 className="text-xl font-semibold tracking-tight">{p.name}</h3>
                   <Link
-                    href={p.url}
+                    href={tracked(p.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-1 inline-flex items-center gap-1 font-mono text-xs text-accent hover:underline"
